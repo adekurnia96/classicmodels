@@ -1,3 +1,5 @@
+-- Query untuk menampilkan customerNumber siapa saja yang memesan productLine Classic Cars dimana total hitung atau COUNT productLine tersebut lebih besar dari 23 :
+
 SELECT c.customerNumber, COUNT(*) AS total_orders
 FROM customers c
 JOIN orders o ON c.customerNumber = o.customerNumber

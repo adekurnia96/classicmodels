@@ -72,21 +72,17 @@ RETURNS DATE
 BEGIN
     DECLARE min_date DATE;
 
-    -- Temporary table to hold individual dates
     CREATE TEMPORARY TABLE temp_dates (
         temp_date DATE
     );
 
-    -- Loop to insert individual dates into temp table
     WHILE LENGTH(concatenated_dates) > 0 DO
         INSERT INTO temp_dates (temp_date) VALUES (STR_TO_DATE(SUBSTRING_INDEX(concatenated_dates, ', ', 1), '%Y-%m-%d'));
         SET concatenated_dates = SUBSTRING(concatenated_dates, LENGTH(SUBSTRING_INDEX(concatenated_dates, ', ', 1)) + 3);
     END WHILE;
 
-    -- Find minimum date
     SELECT MIN(temp_date) INTO min_date FROM temp_dates;
 
-    -- Drop temporary table
     DROP TEMPORARY TABLE IF EXISTS temp_dates;
 
     RETURN min_date;
